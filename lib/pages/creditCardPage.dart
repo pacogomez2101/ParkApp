@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/menu_widget.dart';
-
 class CreditCardPage extends StatelessWidget {
   const CreditCardPage({Key key}) : super(key: key);
 
@@ -9,11 +7,10 @@ class CreditCardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: MenuWidget(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.amber),
+        iconTheme: IconThemeData(color: Colors.grey[400]),
         actions: [_appBar(context, size)],
       ),
       body: Column(
@@ -107,7 +104,7 @@ class CreditCardPage extends StatelessWidget {
               icon: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.amber),
+                    color: Colors.black),
                 child: Icon(
                   Icons.autorenew,
                   color: Colors.white,
@@ -164,7 +161,7 @@ class CreditCardPage extends StatelessWidget {
             SizedBox(width: size.width * .02),
             CircleAvatar(
               maxRadius: 15,
-              backgroundColor: Colors.amber,
+              backgroundColor: Colors.black,
               child: Container(
                   alignment: Alignment.center,
                   child: Text('Fr',

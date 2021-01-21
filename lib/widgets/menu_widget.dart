@@ -27,15 +27,18 @@ class _MenuWidgetState extends State<MenuWidget> {
                 width: size.width * .02,
                 child: Column(
                   children: [
-                    CircleAvatar(
-                      backgroundColor: Colors.amber[300],
-                      radius: 50,
-                      child: Container(
-                          child: Text(
-                        "Francisco Gómez",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      )),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100)),
+                      height: size.width * .3,
+                      width: size.width * .3,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: Image.asset(
+                          'assets/profile.jpeg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     SizedBox(height: 15),
                     Text(
@@ -60,7 +63,7 @@ class _MenuWidgetState extends State<MenuWidget> {
               leading: Icon(Icons.person, color: Colors.white),
               title: Text('Perfil', style: TextStyle(color: Colors.white)),
               onTap: () {
-                Navigator.pushNamed(context, 'User');
+                Navigator.pushNamed(context, 'profile');
               },
             ),
             ListTile(
@@ -73,18 +76,18 @@ class _MenuWidgetState extends State<MenuWidget> {
             ),
             ListTile(
               leading: Icon(Icons.card_membership, color: Colors.white),
-              title: Text('Mis tarjetas(Falta de diseño)',
-                  style: TextStyle(color: Colors.white)),
+              title:
+                  Text('Mis tarjetas', style: TextStyle(color: Colors.white)),
               onTap: () {
                 Navigator.pushNamed(context, 'creditCard');
               },
             ),
             ListTile(
               leading: Icon(Icons.file_copy, color: Colors.white),
-              title: Text('Terminos y condiciones(Falta de diseño)',
+              title: Text('Terminos y condiciones',
                   style: TextStyle(color: Colors.white)),
               onTap: () {
-                Navigator.pushNamed(context, '/');
+                Navigator.pushNamed(context, 'termsPage');
               },
             ),
             ListTile(
