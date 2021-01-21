@@ -4,19 +4,21 @@ import 'package:play_ticket_app/routes/routes.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+const PrimaryColor = const Color.fromRGBO(44, 45, 63, 1.0);
+
+class MyApp extends StatelessWidget {  
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Colors.transparent));
+        .copyWith(statusBarColor: Color.fromRGBO(44, 45, 63, 1.0)));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MaterialApp(
+    return MaterialApp(      
       debugShowCheckedModeBanner: false,
-      title: 'PayTicket',
+      title: 'ParkApp',
       initialRoute: '/',
       routes: getRoutes(),
       theme: ThemeData(
-        primaryIconTheme: IconThemeData(color: Colors.amber),
+        primaryIconTheme: IconThemeData(color: Colors.amber),        
       ),
     );
   }
