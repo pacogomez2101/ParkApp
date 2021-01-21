@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:play_ticket_app/widgets/menu_widget.dart';
 
 class HistorialPage extends StatelessWidget {
   @override
@@ -9,8 +8,8 @@ class HistorialPage extends StatelessWidget {
       backgroundColor: Color.fromRGBO(232, 232, 232, 1.0),
       appBar: AppBar(
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
-      drawer: MenuWidget(),
       body: Container(
         alignment: Alignment.center,
         child: Column(children: [
@@ -81,7 +80,7 @@ class HistorialPage extends StatelessWidget {
             height: size.width * .15,
             width: size.width * .15,
             decoration: BoxDecoration(
-                color: Colors.amber, borderRadius: BorderRadius.circular(100)),
+                color: Colors.black, borderRadius: BorderRadius.circular(100)),
             child: Image(
               image: AssetImage('assets/efectivoIcon.png'),
               width: 30,
