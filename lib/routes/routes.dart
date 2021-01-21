@@ -4,6 +4,7 @@ import 'package:play_ticket_app/pages/creditCardPage.dart';
 //Paginas
 import 'package:play_ticket_app/pages/initialPage.dart';
 import 'package:play_ticket_app/pages/loginPage.dart';
+import 'package:play_ticket_app/pages/newInitial_page.dart';
 import 'package:play_ticket_app/pages/profile.dart';
 import 'package:play_ticket_app/pages/registerPage.dart';
 import 'package:play_ticket_app/pages/stackHome.dart';
@@ -16,6 +17,7 @@ import 'package:play_ticket_app/pages/historialPage.dart';
 Map<String, WidgetBuilder> getRoutes() {
   return <String, WidgetBuilder>{
     '/': (BuildContext context) => InitialPage(),
+    '//': (BuildContext context) => NewInitialPage(),
     'Login': (BuildContext context) => LoginPage(),
     'Register': (BuildContext context) => RegisterPage(),
     'Tutorial': (BuildContext context) => TutorialPage(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InitialPage extends StatelessWidget {
+class NewInitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -11,12 +11,11 @@ class InitialPage extends StatelessWidget {
           children: [
             _background(size),
             Center(
-              child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _logo(size),
-                  _titulos(),
+              child: Column(              
+                children: [ 
+                  Spacer(flex:1),                 
                   _botones(size, context),
+                  SizedBox(height:50),
                   _texto(size),
                 ],
               )
@@ -29,7 +28,7 @@ class InitialPage extends StatelessWidget {
 
   _logo(Size size) {
     return Container(
-      margin: EdgeInsets.only(top: 55),
+      margin: EdgeInsets.only(top: 75),
       width: size.width * .5,
       decoration: BoxDecoration(
           color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
@@ -61,8 +60,7 @@ class InitialPage extends StatelessWidget {
   _botones(Size size, BuildContext context) {
     return Container(
       child: Column(children: [
-        _boton(context, 'INICIAR SESION', Color.fromRGBO(245, 182, 79, 1.0), Colors.white, size),
-        SizedBox(height:10),
+        _boton(context, 'INICIAR SESION', Colors.blueGrey, Colors.white, size),
         _boton(context, 'REGISTRARSE', Colors.white, Colors.black, size),
       ]),
     );
@@ -71,12 +69,8 @@ class InitialPage extends StatelessWidget {
   _boton(BuildContext context, String mensaje, Color color, Color colorTexto,
       Size size) {
     return Container(
-      width: size.width * .7,
-      height: size.width* .15,
+      width: size.width * .5,
       child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
         onPressed: () {
           mensaje == 'INICIAR SESION'
               ? Navigator.pushNamed(context, 'Login')
@@ -109,7 +103,7 @@ class InitialPage extends StatelessWidget {
       height: size.height,
       width: size.width,     
       child: Image(
-        image: AssetImage('assets/new.png'),
+        image: AssetImage('assets/Background2.png'),
         fit: BoxFit.fill,
       ),
     );

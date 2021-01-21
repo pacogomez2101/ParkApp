@@ -154,6 +154,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: unused_element
   _ticket(Size size) {
     return Container(
       margin: EdgeInsets.all(20),
