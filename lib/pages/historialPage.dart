@@ -5,10 +5,11 @@ class HistorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(232, 232, 232, 1.0),
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: Container(
         alignment: Alignment.center,
@@ -80,7 +81,14 @@ class HistorialPage extends StatelessWidget {
             height: size.width * .15,
             width: size.width * .15,
             decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(100)),
+                gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.amber[600],
+                      Color.fromRGBO(245, 182, 79, 1.0)
+                    ]),
+                borderRadius: BorderRadius.circular(100)),
             child: Image(
               image: AssetImage('assets/efectivoIcon.png'),
               width: 30,

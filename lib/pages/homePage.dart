@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       child: AnimatedContainer(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          color: Colors.white,
+          color: Color.fromRGBO(26, 34, 52, 1),
         ),
         duration: Duration(milliseconds: 250),
         transform: Matrix4.translationValues(xOffset, yOffset, 0)
@@ -42,7 +42,10 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   isDrawerOpen
                       ? IconButton(
-                          icon: Icon(Icons.arrow_back_ios),
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                          ),
                           onPressed: () {
                             setState(() {
                               xOffset = 0;
@@ -56,6 +59,7 @@ class _HomePageState extends State<HomePage> {
                       : IconButton(
                           icon: Icon(
                             Icons.menu,
+                            color: Colors.white,
                           ),
                           onPressed: () {
                             setState(() {
@@ -92,12 +96,12 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               "Francisco",
-              style: TextStyle(color: Colors.grey[400]),
+              style: TextStyle(color: Colors.white),
             ),
             SizedBox(width: size.width * .02),
             CircleAvatar(
               maxRadius: 15,
-              backgroundColor: Colors.black,
+              backgroundColor: Color.fromRGBO(245, 182, 79, 1.0),
               child: Container(
                   alignment: Alignment.center,
                   child: Text('Fr',
@@ -119,7 +123,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               "Tickets activos",
               style: TextStyle(
-                color: Colors.grey[400],
+                color: Colors.white,
                 fontSize: size.width * 0.06,
               ),
             ),
@@ -340,7 +344,8 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             height: size.width * 0.2,
           ),
-          _boton('PAGAR BOLETO', Colors.black, Colors.white, size, context),
+          _boton('PAGAR BOLETO', Color.fromRGBO(245, 182, 79, 1.0),
+              Colors.white, size, context),
         ],
       ),
     );
@@ -356,7 +361,7 @@ class _HomePageState extends State<HomePage> {
                 450), //You can Replace this with your desired WIDTH and HEIGHT
             painter: RPSCustomPainter2(),
           ),
-          infoTicket2()
+          infoTicket2(),
         ],
       ),
     );
@@ -377,7 +382,7 @@ class RPSCustomPainter1 extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint_0 = new Paint()
-      ..color = Colors.black
+      ..color = Color.fromRGBO(245, 182, 79, 1.0)
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 

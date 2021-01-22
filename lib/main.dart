@@ -6,19 +6,19 @@ void main() => runApp(MyApp());
 
 const PrimaryColor = const Color.fromRGBO(44, 45, 63, 1.0);
 
-class MyApp extends StatelessWidget {  
+class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {    
+  Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light
-        .copyWith(statusBarColor: Color.fromRGBO(44, 45, 63, 1.0)));
+        .copyWith(statusBarColor: Colors.transparent));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    return MaterialApp(      
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ParkApp',
       initialRoute: '/',
       routes: getRoutes(),
       theme: ThemeData(
-        primaryIconTheme: IconThemeData(color: Colors.amber),        
+        primaryIconTheme: IconThemeData(color: Colors.amber),
       ),
     );
   }

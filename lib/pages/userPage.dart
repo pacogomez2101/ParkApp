@@ -6,8 +6,9 @@ class UserPage extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -15,7 +16,7 @@ class UserPage extends StatelessWidget {
           children: [
             SizedBox(height: 20),
             CircleAvatar(
-              backgroundColor: Colors.black,
+              backgroundColor: Color.fromRGBO(245, 182, 79, 1.0),
               maxRadius: 140,
               child: Container(
                   alignment: Alignment.center,
@@ -31,11 +32,12 @@ class UserPage extends StatelessWidget {
               child: _customInput(false, Icons.person, "Usuario"),
             ),
             SizedBox(height: 20),
-            _boton(
-                'GUARDAR CAMBIOS', Colors.black, Colors.white, size, context),
+            _boton('GUARDAR CAMBIOS', Color.fromRGBO(245, 182, 79, 1.0),
+                Colors.white, size, context),
           ],
         )),
       ),
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
     );
   }
 
@@ -59,7 +61,7 @@ class UserPage extends StatelessWidget {
         decoration: InputDecoration(
             prefixIcon: Icon(
               icon,
-              color: Colors.black,
+              color: Color.fromRGBO(245, 182, 79, 1.0),
             ),
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
@@ -73,6 +75,7 @@ class UserPage extends StatelessWidget {
     return Container(
       width: size.width * .5,
       child: RaisedButton(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         onPressed: () {},
         child: Text(
           mensaje,

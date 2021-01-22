@@ -6,20 +6,21 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
         elevation: 0.0,
         iconTheme: IconThemeData(color: Colors.white),
       ),
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
       body: Column(
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.3,
             width: double.infinity,
-            color: Colors.black,
+            color: Color.fromRGBO(26, 34, 52, 1),
             child: Column(
               children: [
                 SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.05,
+                  height: MediaQuery.of(context).size.width * 0.03,
                 ),
                 Container(
                   height: MediaQuery.of(context).size.width * 0.3,
@@ -41,21 +42,26 @@ class Profile extends StatelessWidget {
                       color: Colors.white,
                       fontSize: MediaQuery.of(context).size.width * 0.05),
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.width * 0.05,
+                ),
+                boton(context)
               ],
             ),
           ),
           Expanded(child: listTile()),
-          boton(context),
-          SizedBox(
-            height: MediaQuery.of(context).size.width * 0.2,
-          )
         ],
       ),
     );
   }
 
-  List datos = ['Francisco', 'Gómez García', 'franc@gmail.com'];
-  List titles = ['Nombre', 'Apellidos', 'Email'];
+  List datos = [
+    'Francisco',
+    'Gómez García',
+    'franc@gmail.com',
+    '+524*******10'
+  ];
+  List titles = ['Nombre', 'Apellidos', 'Email', 'Numero de teléfono'];
 
   Widget listTile() {
     return ListView.builder(
@@ -70,8 +76,14 @@ class Profile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text(data),
-          subtitle: Text(title),
+          title: Text(
+            data,
+            style: TextStyle(color: Colors.white),
+          ),
+          subtitle: Text(
+            title,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
         Divider()
       ],
@@ -86,9 +98,13 @@ class Profile extends StatelessWidget {
       onPressed: () {},
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(50)),
-        height: size.width * 0.13,
-        width: size.width * .8,
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.amber[600], Color.fromRGBO(245, 182, 79, 1.0)]),
+            borderRadius: BorderRadius.circular(50)),
+        height: size.width * 0.1,
+        width: size.width * .6,
         child: Center(
             child: Text(
           'ACTUALIZAR DATOS',

@@ -11,15 +11,14 @@ class NewInitialPage extends StatelessWidget {
           children: [
             _background(size),
             Center(
-              child: Column(              
-                children: [ 
-                  Spacer(flex:1),                 
-                  _botones(size, context),
-                  SizedBox(height:50),
-                  _texto(size),
-                ],
-              )
-            ),
+                child: Column(
+              children: [
+                Spacer(flex: 1),
+                _botones(size, context),
+                SizedBox(height: 50),
+                _texto(size),
+              ],
+            )),
           ],
         ),
       ),
@@ -44,12 +43,17 @@ class NewInitialPage extends StatelessWidget {
         children: [
           Text(
             "PARK APP",
-            style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold,),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SizedBox(height: 10),
           Text(
             "La manera más rapida de \npagar tu boleto",
-            style: TextStyle(color: Colors.amber, fontSize: 14, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                color: Colors.amber, fontSize: 14, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
         ],
@@ -88,20 +92,20 @@ class NewInitialPage extends StatelessWidget {
 
   _texto(Size size) {
     return Container(
-      margin:EdgeInsets.only(right:20, bottom: 10),
+      margin: EdgeInsets.only(right: 20, bottom: 10),
       width: size.width,
       alignment: Alignment.centerRight,
       child: Text(
         "ParkApp Inc Software",
         style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-      ),      
+      ),
     );
   }
 
   _background(Size size) {
-    return Container( 
+    return Container(
       height: size.height,
-      width: size.width,     
+      width: size.width,
       child: Image(
         image: AssetImage('assets/Background2.png'),
         fit: BoxFit.fill,

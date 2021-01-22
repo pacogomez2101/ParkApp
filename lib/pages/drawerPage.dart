@@ -7,9 +7,7 @@ class DrawerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/black.jpg'), fit: BoxFit.fill)),
+      color: Color.fromRGBO(26, 34, 52, 1),
       child: Column(
         children: [
           SizedBox(
