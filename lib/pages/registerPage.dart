@@ -13,25 +13,23 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                  _bienvenida(size),
-                  SizedBox(height: size.width * .1),
-                  _formulario(size),
-                  SizedBox(height: size.width * .05),
-                  _botones(size),
-                  SizedBox(height: size.width * .05),
-                  _decoracion(size),
-                  _redesSociales(size),
-                  _flat(size, context)
-                ])),
-          ),
-        ));
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+            _bienvenida(size),
+            _formulario(size),
+            _botones(size),
+            _decoracion(size),
+            _redesSociales(size),
+            _flat(size, context),
+            SizedBox(
+              height: size.width * 0.2,
+            )
+          ])),
+    );
   }
 
   _bienvenida(Size size) {
@@ -43,11 +41,11 @@ class _RegisterPageState extends State<RegisterPage> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text("Hola!",
             style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 40,
                 fontWeight: FontWeight.bold)),
         Text(
-          "Registrate para continuar",
+          " Registrate para continuar",
           style: TextStyle(color: Colors.grey[400]),
         )
       ]),
@@ -69,22 +67,38 @@ class _RegisterPageState extends State<RegisterPage> {
   _botones(Size size) {
     return Container(
       child: Column(children: [
-        _boton('REGISTRARSE', Colors.black, Colors.white, size),
+        _boton(
+            'REGISTRARSE',
+            LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.amber[600], Color.fromRGBO(245, 182, 79, 1.0)]),
+            Colors.white,
+            size),
       ]),
     );
   }
 
-  _boton(String mensaje, Color color, Color colorTexto, Size size) {
+  _boton(String mensaje, LinearGradient color, Color colorTexto, Size size) {
     return Container(
       width: size.width * .5,
-      child: RaisedButton(
-        onPressed: () {},
-        child: Text(
-          mensaje,
-          style: TextStyle(color: colorTexto),
+      height: size.width * .1,
+      child: GestureDetector(
+        onTap: () {
+          mensaje == 'INICIAR SESION'
+              ? Navigator.pushNamed(context, 'Login')
+              : Navigator.pushNamed(context, 'Register');
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: color, borderRadius: BorderRadius.circular(50)),
+          child: Center(
+            child: Text(
+              mensaje,
+              style: TextStyle(color: colorTexto),
+            ),
+          ),
         ),
-        color: color,
-        elevation: 5,
       ),
     );
   }
@@ -98,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(width: 10),
           Text(
             'ó',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
           SizedBox(width: 10),
           _linea(size)
@@ -109,7 +123,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _linea(Size size) {
     return Container(
-        color: Colors.black,
+        color: Colors.white,
         height: size.width * .002,
         width: size.width * .38);
   }
@@ -120,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           Text(
             "Inicia con redes sociales",
-            style: TextStyle(color: Colors.grey[400]),
+            style: TextStyle(color: Colors.white),
           ),
           SizedBox(height: 15),
           Row(
@@ -154,7 +168,7 @@ class _RegisterPageState extends State<RegisterPage> {
         },
         child: Text(
           "¿Ya tienes una cuenta?",
-          style: TextStyle(color: Colors.grey[400]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -166,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
       padding: EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 25),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(.05),
@@ -180,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               icon,
-              color: Colors.black,
+              color: Color.fromRGBO(245, 182, 79, 1.0),
             ),
             focusedBorder: InputBorder.none,
             border: InputBorder.none,

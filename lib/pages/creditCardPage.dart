@@ -8,9 +8,9 @@ class CreditCardPage extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.grey[400]),
+        iconTheme: IconThemeData(color: Colors.white),
         actions: [_appBar(context, size)],
       ),
       body: Column(
@@ -20,14 +20,14 @@ class CreditCardPage extends StatelessWidget {
           ),
           _titulo(size),
           SizedBox(
-            height: size.width * 0.1,
+            height: size.width * 0.05,
           ),
           Expanded(
             child: listView(size),
           ),
         ],
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
     );
   }
 
@@ -52,50 +52,61 @@ class CreditCardPage extends StatelessWidget {
       children: [
         Container(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(height: size.width * 0.05),
               Row(
                 children: [
-                  SizedBox(width: size.width * 0.02),
+                  SizedBox(width: size.width * 0.05),
+                  Image(
+                    image: AssetImage('assets/master1.png'),
+                    height: size.width * 0.1,
+                  )
+                ],
+              ),
+              SizedBox(height: size.width * 0.05),
+              Row(
+                children: [
+                  SizedBox(width: size.width * 0.05),
                   Text(
-                    '**** **** **** ****',
+                    '2145   0875   5325   2355',
                     style: TextStyle(
-                        fontSize: size.width * 0.07, color: Colors.grey[400]),
+                        fontSize: size.width * 0.06, color: Colors.white),
                   ),
                 ],
               ),
+              SizedBox(height: size.width * 0.05),
               Row(
                 children: [
-                  SizedBox(width: size.width * 0.02),
+                  SizedBox(width: size.width * 0.05),
                   Text(
-                    'Titular',
+                    'VALID \nTHRU',
                     style: TextStyle(
-                        fontSize: size.width * 0.05, color: Colors.grey[400]),
+                        fontSize: size.width * 0.03, color: Colors.white),
                   ),
+                  SizedBox(
+                    width: size.width * 0.03,
+                  ),
+                  Text(
+                    '05/27',
+                    style: TextStyle(
+                        fontSize: size.width * 0.04, color: Colors.white),
+                  )
                 ],
               )
             ],
           ),
-          height: size.width * 0.5,
-          width: size.width * 0.8,
+          height: size.width * 0.6,
+          width: size.width * 0.9,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey[400],
-              ),
-              top: BorderSide(
-                color: Colors.grey[400],
-              ),
-              left: BorderSide(
-                color: Colors.grey[400],
-              ),
-              right: BorderSide(
-                color: Colors.grey[400],
-              ),
-            ),
-          ),
+              borderRadius: BorderRadius.circular(13),
+              gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    Colors.amber[600],
+                    Color.fromRGBO(245, 182, 79, 1.0)
+                  ])),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +115,7 @@ class CreditCardPage extends StatelessWidget {
               icon: Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(50),
-                    color: Colors.black),
+                    color: Color.fromRGBO(245, 182, 79, 1.0)),
                 child: Icon(
                   Icons.autorenew,
                   color: Colors.white,
@@ -131,13 +142,15 @@ class CreditCardPage extends StatelessWidget {
 
   Widget _titulo(size) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(width: size.width * 0.05),
         Text(
           'Tarjetas registradas',
           style: TextStyle(
-            fontSize: size.width * 0.06,
-            color: Colors.grey[400],
+            fontSize: size.width * 0.05,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
       ],
@@ -156,12 +169,12 @@ class CreditCardPage extends StatelessWidget {
           children: [
             Text(
               "Francisco",
-              style: TextStyle(color: Colors.grey[400]),
+              style: TextStyle(color: Colors.white),
             ),
             SizedBox(width: size.width * .02),
             CircleAvatar(
               maxRadius: 15,
-              backgroundColor: Colors.black,
+              backgroundColor: Color.fromRGBO(245, 182, 79, 1.0),
               child: Container(
                   alignment: Alignment.center,
                   child: Text('Fr',

@@ -17,7 +17,7 @@ class TutorialPage extends StatefulWidget {
               child: Text(
             "Bienvenido Francisco!",
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
           SizedBox(height: 15),
@@ -44,7 +44,7 @@ class TutorialPage extends StatefulWidget {
               child: Text(
             "Escanea tu codigo",
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
           SizedBox(height: 15),
@@ -71,7 +71,7 @@ class TutorialPage extends StatefulWidget {
               child: Text(
             "Realiza tus tareas",
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
           SizedBox(height: 15),
@@ -98,7 +98,7 @@ class TutorialPage extends StatefulWidget {
               child: Text(
             "Bienvenido Francisco!",
             style: TextStyle(
-                fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 25, color: Colors.white, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           )),
           SizedBox(height: 15),
@@ -144,7 +144,9 @@ class _TutorialPageState extends State<TutorialPage>
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
       body: Container(
         alignment: Alignment.center,
         child: DefaultTabController(
@@ -185,7 +187,7 @@ class _TutorialPageState extends State<TutorialPage>
                                     color: _activeTabIndex != 1 &&
                                             _activeTabIndex != 2 &&
                                             _activeTabIndex != 3
-                                        ? Colors.black
+                                        ? Color.fromRGBO(245, 182, 79, 1.0)
                                         : Colors.grey[300],
                                     borderRadius: BorderRadius.circular(25)),
                               ),
@@ -195,7 +197,7 @@ class _TutorialPageState extends State<TutorialPage>
                                 margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     color: _activeTabIndex == 1
-                                        ? Colors.black
+                                        ? Color.fromRGBO(245, 182, 79, 1.0)
                                         : Colors.grey[300],
                                     borderRadius: BorderRadius.circular(25)),
                               ),
@@ -205,7 +207,7 @@ class _TutorialPageState extends State<TutorialPage>
                                 margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     color: _activeTabIndex == 2
-                                        ? Colors.black
+                                        ? Color.fromRGBO(245, 182, 79, 1.0)
                                         : Colors.grey[300],
                                     borderRadius: BorderRadius.circular(25)),
                               ),
@@ -215,7 +217,7 @@ class _TutorialPageState extends State<TutorialPage>
                                 margin: EdgeInsets.all(5),
                                 decoration: BoxDecoration(
                                     color: _activeTabIndex == 3
-                                        ? Colors.black
+                                        ? Color.fromRGBO(245, 182, 79, 1.0)
                                         : Colors.grey[300],
                                     borderRadius: BorderRadius.circular(25)),
                               ),
@@ -223,9 +225,8 @@ class _TutorialPageState extends State<TutorialPage>
                           ),
                           SizedBox(height: 10),
                           Container(
-                            child: RaisedButton(
-                              color: Colors.black,
-                              onPressed: () {
+                            child: GestureDetector(
+                              onTap: () {
                                 if (_activeTabIndex == 3) {
                                   Navigator.pushReplacementNamed(
                                       context, 'stackHome');
@@ -235,12 +236,29 @@ class _TutorialPageState extends State<TutorialPage>
                                   });
                                 }
                               },
-                              child: Text(
-                                _activeTabIndex == 3 ? "Iniciar" : "Siguiente",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.normal),
+                              child: Container(
+                                height: size.width * 0.08,
+                                width: size.width * 0.25,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Colors.amber[600],
+                                          Color.fromRGBO(245, 182, 79, 1.0)
+                                        ])),
+                                child: Center(
+                                  child: Text(
+                                    _activeTabIndex == 3
+                                        ? "Iniciar"
+                                        : "Siguiente",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.normal),
+                                  ),
+                                ),
                               ),
                             ),
                           )

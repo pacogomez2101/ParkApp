@@ -12,27 +12,26 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                  _bienvenida(size),
-                  SizedBox(height: size.width * .1),
-                  _formulario(size),
-                  SizedBox(height: size.width * .05),
-                  _botones(size, context),
-                  SizedBox(height: size.width * .05),
-                  _decoracion(size),
-                  SizedBox(height: size.width * .05),
-                  _redesSociales(size),
-                  SizedBox(height: size.width * .05),
-                  _flat(size, context)
-                ])),
-          ),
-        ));
+      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+      resizeToAvoidBottomInset: false,
+      body: SafeArea(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+            _bienvenida(size),
+            SizedBox(height: size.width * .1),
+            _formulario(size),
+            SizedBox(height: size.width * .05),
+            _botones(size, context),
+            SizedBox(height: size.width * .05),
+            _decoracion(size),
+            SizedBox(height: size.width * .05),
+            _redesSociales(size),
+            SizedBox(height: size.width * .02),
+            _flat(size, context),
+            SizedBox(height: size.width * .05),
+          ])),
+    );
   }
 
   _bienvenida(Size size) {
@@ -44,11 +43,11 @@ class _LoginPageState extends State<LoginPage> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text("Bienvenido!",
             style: TextStyle(
-                color: Colors.black,
+                color: Colors.white,
                 fontSize: 40,
                 fontWeight: FontWeight.bold)),
         Text(
-          "Inicia sesión para continuar",
+          "  Inicia sesión para continuar",
           style: TextStyle(color: Colors.grey[400]),
         )
       ]),
@@ -69,35 +68,48 @@ class _LoginPageState extends State<LoginPage> {
   _botones(Size size, BuildContext context) {
     return Container(
       child: Column(children: [
-        _boton('INICIAR SESION', Colors.black, Colors.white, size, context),
+        _boton(
+            'INICIAR SESION',
+            LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.amber[600], Color.fromRGBO(245, 182, 79, 1.0)]),
+            Colors.white,
+            size,
+            context),
         FlatButton(
             onPressed: () {},
             child: Text(
               "¿Olvidaste tu contraseña?",
-              style: TextStyle(color: Colors.grey[400]),
+              style: TextStyle(color: Colors.white),
             )),
       ]),
     );
   }
 
-  _boton(String mensaje, Color color, Color colorTexto, Size size,
+  _boton(String mensaje, LinearGradient color, Color colorTexto, Size size,
       BuildContext context) {
     return Container(
       width: size.width * .5,
-      child: RaisedButton(
-        onPressed: () {
+      height: size.width * .1,
+      child: GestureDetector(
+        onTap: () {
           if (email == "paco" && pass == "12345") {
             Navigator.pushReplacementNamed(context, 'Tutorial');
           } else {
             print("CONTRASEÑA O USUARIO INCORRECTOS");
           }
         },
-        child: Text(
-          mensaje,
-          style: TextStyle(color: colorTexto),
+        child: Container(
+          decoration: BoxDecoration(
+              gradient: color, borderRadius: BorderRadius.circular(50)),
+          child: Center(
+            child: Text(
+              mensaje,
+              style: TextStyle(color: colorTexto),
+            ),
+          ),
         ),
-        color: color,
-        elevation: 5,
       ),
     );
   }
@@ -111,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(width: 10),
           Text(
             'ó',
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Colors.white),
           ),
           SizedBox(width: 10),
           _linea(size)
@@ -122,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
 
   _linea(Size size) {
     return Container(
-        color: Colors.black,
+        color: Colors.white,
         height: size.width * .002,
         width: size.width * .38);
   }
@@ -133,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           Text(
             "Inicia con redes sociales",
-            style: TextStyle(color: Colors.grey[400]),
+            style: TextStyle(color: Colors.white),
           ),
           SizedBox(height: 15),
           Row(
@@ -167,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
         },
         child: Text(
           "¿Todavia no tienes una cuenta?",
-          style: TextStyle(color: Colors.grey[400]),
+          style: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -179,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
       padding: EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 25),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
                 color: Colors.black.withOpacity(.05),
@@ -193,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
             prefixIcon: Icon(
               icon,
-              color: Colors.black,
+              color: Color.fromRGBO(245, 182, 79, 1.0),
             ),
             focusedBorder: InputBorder.none,
             border: InputBorder.none,
