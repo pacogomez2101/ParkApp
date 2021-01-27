@@ -25,41 +25,41 @@ class NewInitialPage extends StatelessWidget {
     );
   }
 
-  _logo(Size size) {
-    return Container(
-      margin: EdgeInsets.only(top: 75),
-      width: size.width * .5,
-      decoration: BoxDecoration(
-          color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
-      child: Image(
-        image: AssetImage('assets/ParkApp.png'),
-      ),
-    );
-  }
+  // _logo(Size size) {
+  //   return Container(
+  //     margin: EdgeInsets.only(top: 75),
+  //     width: size.width * .5,
+  //     decoration: BoxDecoration(
+  //         color: Colors.grey[200], borderRadius: BorderRadius.circular(20)),
+  //     child: Image(
+  //       image: AssetImage('assets/ParkApp.png'),
+  //     ),
+  //   );
+  // }
 
-  _titulos() {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            "PARK APP",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(height: 10),
-          Text(
-            "La manera más rapida de \npagar tu boleto",
-            style: TextStyle(
-                color: Colors.amber, fontSize: 14, fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-    );
-  }
+  // _titulos() {
+  //   return Container(
+  //     child: Column(
+  //       children: [
+  //         Text(
+  //           "PARK APP",
+  //           style: TextStyle(
+  //             color: Colors.white,
+  //             fontSize: 25,
+  //             fontWeight: FontWeight.bold,
+  //           ),
+  //         ),
+  //         SizedBox(height: 10),
+  //         Text(
+  //           "La manera más rapida de \npagar tu boleto",
+  //           style: TextStyle(
+  //               color: Colors.amber, fontSize: 14, fontWeight: FontWeight.bold),
+  //           textAlign: TextAlign.center,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _botones(Size size, BuildContext context) {
     return Container(

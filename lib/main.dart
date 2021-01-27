@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
         .copyWith(statusBarColor: Colors.transparent));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
+      color: Colors.black,
       debugShowCheckedModeBanner: false,
       title: 'ParkApp',
       initialRoute: '/',
