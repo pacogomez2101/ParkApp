@@ -7,7 +7,14 @@ class DrawerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      color: Color.fromRGBO(26, 34, 52, 1),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+            Colors.amber[900],
+            Colors.amber[700],
+          ])),
       child: Column(
         children: [
           SizedBox(
