@@ -7,43 +7,107 @@ class CreditCardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),
-        actions: [_appBar(context, size)],
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        iconTheme: IconThemeData(color: Colors.grey[500]),
       ),
       body: Column(
         children: [
+          title(size, 'Tus tarjetas'),
           SizedBox(
             height: size.width * 0.05,
           ),
-          _titulo(size),
+          _card(size),
+          title(size, 'Historial de pagos'),
           SizedBox(
             height: size.width * 0.05,
           ),
           Expanded(
-            child: listView(size),
-          ),
+            child: ticketHistory(size),
+          )
         ],
       ),
-      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
     );
   }
 
-  Widget listView(size) {
+  Widget title(Size size, String title) {
+    return Row(
+      children: [
+        SizedBox(
+          width: size.width * 0.05,
+        ),
+        Text(
+          title,
+          style:
+              TextStyle(color: Colors.grey[500], fontSize: size.width * 0.06),
+        ),
+      ],
+    );
+  }
+
+  // Widget listView(size) {
+  //   return ListView.builder(
+  //     physics: BouncingScrollPhysics(),
+  //     itemCount: 1,
+  //     shrinkWrap: true,
+  //     itemBuilder: (BuildContext context, int index) {
+  //       return Column(
+  //         children: [
+  //           SizedBox(height: size.width * 0.04),
+  //           _card(size),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  Widget ticketHistory(size) {
     return ListView.builder(
       physics: BouncingScrollPhysics(),
-      itemCount: 1,
-      shrinkWrap: true,
+      itemCount: 4,
       itemBuilder: (BuildContext context, int index) {
-        return Column(
-          children: [
-            SizedBox(height: size.width * 0.04),
-            _card(size),
-          ],
-        );
+        return ticket(size);
       },
+    );
+  }
+
+  Widget ticket(size) {
+    return Column(
+      children: [
+        Container(
+          height: size.width * 0.25,
+          width: size.width * 0.9,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 1,
+                blurRadius: 7,
+                offset: Offset(0, 8),
+              )
+            ],
+          ),
+          child: Row(
+            children: [
+              SizedBox(
+                width: size.width * 0.02,
+              ),
+              Container(
+                height: size.width * 0.2,
+                width: size.width * 0.2,
+                child: Image.asset('assets/payment.png'),
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: size.width * 0.05,
+        )
+      ],
     );
   }
 
@@ -99,13 +163,21 @@ class CreditCardPage extends StatelessWidget {
           height: size.width * 0.6,
           width: size.width * 0.9,
           decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: Offset(0, 8),
+                )
+              ],
               borderRadius: BorderRadius.circular(13),
               gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
                   colors: [
-                    Colors.amber[600],
-                    Color.fromRGBO(245, 182, 79, 1.0)
+                    Colors.amber[900],
+                    Colors.amber[700],
                   ])),
         ),
         Row(
@@ -114,6 +186,14 @@ class CreditCardPage extends StatelessWidget {
             IconButton(
               icon: Container(
                 decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 7,
+                        offset: Offset(0, 8),
+                      )
+                    ],
                     borderRadius: BorderRadius.circular(50),
                     color: Color.fromRGBO(245, 182, 79, 1.0)),
                 child: Icon(
@@ -125,8 +205,14 @@ class CreditCardPage extends StatelessWidget {
             ),
             IconButton(
               icon: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), color: Colors.red),
+                decoration: BoxDecoration(boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 7,
+                    offset: Offset(0, 8),
+                  )
+                ], borderRadius: BorderRadius.circular(50), color: Colors.red),
                 child: Icon(
                   Icons.delete,
                   color: Colors.white,
@@ -137,52 +223,6 @@ class CreditCardPage extends StatelessWidget {
           ],
         )
       ],
-    );
-  }
-
-  Widget _titulo(size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(width: size.width * 0.05),
-        Text(
-          'Tarjetas registradas',
-          style: TextStyle(
-            fontSize: size.width * 0.05,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  }
-
-  _appBar(context, size) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, 'User');
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "Francisco",
-              style: TextStyle(color: Colors.white),
-            ),
-            SizedBox(width: size.width * .02),
-            CircleAvatar(
-              maxRadius: 15,
-              backgroundColor: Color.fromRGBO(245, 182, 79, 1.0),
-              child: Container(
-                  alignment: Alignment.center,
-                  child: Text('Fr',
-                      style: TextStyle(color: Colors.white, fontSize: 10))),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

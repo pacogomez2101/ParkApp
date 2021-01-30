@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       child: AnimatedContainer(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          color: Color.fromRGBO(26, 34, 52, 1),
+          color: Colors.white,
         ),
         duration: Duration(milliseconds: 250),
         transform: Matrix4.translationValues(xOffset, yOffset, 0)
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                       ? IconButton(
                           icon: Icon(
                             Icons.arrow_back_ios,
-                            color: Colors.white,
+                            color: Colors.amber[900],
                           ),
                           onPressed: () {
                             setState(() {
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                       : IconButton(
                           icon: Icon(
                             Icons.menu,
-                            color: Colors.white,
+                            color: Colors.amber[900],
                           ),
                           onPressed: () {
                             setState(() {
@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Text(
               "Francisco",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.amber[900]),
             ),
             SizedBox(width: size.width * .02),
             CircleAvatar(
@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               "Tickets activos",
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.amber[900],
                 fontSize: size.width * 0.06,
               ),
             ),
@@ -223,15 +223,19 @@ class _HomePageState extends State<HomePage> {
     return Container(
       width: size.width * .8,
       height: size.width * .15,
-      child: RaisedButton(
-        onPressed: () {},
-        child: Text(
-          mensaje,
-          style: TextStyle(color: colorTexto),
-        ),
-        color: color,
-        elevation: 0.0,
-      ),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+            Colors.amber[900],
+            Colors.amber[700],
+          ])),
+      child: Center(
+          child: Text(
+        mensaje,
+        style: TextStyle(color: colorTexto),
+      )),
     );
   }
 
@@ -382,7 +386,7 @@ class RPSCustomPainter1 extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint_0 = new Paint()
-      ..color = Color.fromRGBO(245, 182, 79, 1.0)
+      ..color = Colors.amber[900]
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 

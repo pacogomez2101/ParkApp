@@ -13,22 +13,24 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-            _bienvenida(size),
-            _formulario(size),
-            _botones(size),
-            _decoracion(size),
-            _redesSociales(size),
-            _flat(size, context),
-            SizedBox(
-              height: size.width * 0.2,
-            )
-          ])),
+          child: Stack(children: [
+        background(size),
+        Column(children: [
+          _bienvenida(size),
+          SizedBox(height: size.width * 0.15),
+          _formulario(size),
+          SizedBox(height: size.width * 0.1),
+          _botones(size),
+          SizedBox(height: size.width * 0.2),
+          _decoracion(size),
+          SizedBox(height: size.width * 0.1),
+          _redesSociales(size),
+          SizedBox(height: size.width * 0.15),
+          _flat(size, context),
+        ]),
+      ])),
     );
   }
 
@@ -46,7 +48,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 fontWeight: FontWeight.bold)),
         Text(
           " Registrate para continuar",
-          style: TextStyle(color: Colors.grey[400]),
+          style: TextStyle(color: Colors.white),
         )
       ]),
     );
@@ -57,9 +59,29 @@ class _RegisterPageState extends State<RegisterPage> {
       alignment: Alignment.centerLeft,
       width: size.width * .85,
       child: Column(children: [
-        _customInput(false, Icons.person, 'Usuario'),
-        _customInput(false, Icons.email, "Correo electronico"),
-        _customInput(true, Icons.lock, "Contraseña")
+        _input(
+            context,
+            'Usuario',
+            Icon(
+              Icons.person,
+              color: Colors.grey,
+            )),
+        SizedBox(height: size.width * 0.05),
+        _input(
+            context,
+            'Correo electrónico',
+            Icon(
+              Icons.mail,
+              color: Colors.grey,
+            )),
+        SizedBox(height: size.width * 0.05),
+        _input(
+            context,
+            'Contraseña',
+            Icon(
+              Icons.vpn_key,
+              color: Colors.grey,
+            )),
       ]),
     );
   }
@@ -72,7 +94,10 @@ class _RegisterPageState extends State<RegisterPage> {
             LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Colors.amber[600], Color.fromRGBO(245, 182, 79, 1.0)]),
+                colors: [
+                  Colors.amber[900],
+                  Colors.amber[700],
+                ]),
             Colors.white,
             size),
       ]),
@@ -112,7 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(width: 10),
           Text(
             'ó',
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.grey[600]),
           ),
           SizedBox(width: 10),
           _linea(size)
@@ -123,7 +148,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   _linea(Size size) {
     return Container(
-        color: Colors.white,
+        color: Colors.grey[600],
         height: size.width * .002,
         width: size.width * .38);
   }
@@ -134,7 +159,7 @@ class _RegisterPageState extends State<RegisterPage> {
         children: [
           Text(
             "Inicia con redes sociales",
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.grey[600]),
           ),
           SizedBox(height: 15),
           Row(
@@ -164,42 +189,68 @@ class _RegisterPageState extends State<RegisterPage> {
     return Container(
       child: FlatButton(
         onPressed: () {
-          Navigator.pushReplacementNamed(context, 'Login');
+          Navigator.pushReplacementNamed(context, '/');
         },
         child: Text(
           "¿Ya tienes una cuenta?",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.amber[900]),
         ),
       ),
     );
   }
 
-  _customInput(bool isPassword, IconData icon, String placeholder) {
+  background(size) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.only(top: 5, left: 5, bottom: 5, right: 25),
+      height: size.width * 0.73,
+      width: size.width * 0.73,
+      transform: Matrix4.rotationZ(-0.25),
       decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Colors.amber[900],
+                Colors.amber[700],
+              ]),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
+            topLeft: Radius.circular(20.0),
+          )),
+    );
+  }
+
+  _input(BuildContext context, String title, Icon icon) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      child: Padding(
+        padding: EdgeInsets.only(left: size.width * 0.05),
+        child: Center(
+          child: TextFormField(
+            cursorColor: Colors.grey,
+            decoration: InputDecoration(
+              hintText: title,
+              border: InputBorder.none,
+              icon: icon,
+              isCollapsed: true,
+              focusColor: Colors.red,
+            ),
+          ),
+        ),
+      ),
+      height: size.height * 0.06,
+      width: size.width * 0.8,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50.0),
           color: Colors.white,
-          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-                color: Colors.black.withOpacity(.05),
-                offset: Offset(0, 5),
-                blurRadius: 5)
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 1,
+              blurRadius: 7,
+              offset: Offset(0, 8),
+            )
           ]),
-      child: TextField(
-        obscureText: isPassword,
-        autocorrect: false,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            prefixIcon: Icon(
-              icon,
-              color: Color.fromRGBO(245, 182, 79, 1.0),
-            ),
-            focusedBorder: InputBorder.none,
-            border: InputBorder.none,
-            hintText: '$placeholder'),
-      ),
     );
   }
 }
