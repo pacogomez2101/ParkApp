@@ -257,7 +257,6 @@ class _HomePageState extends State<HomePage> {
                       height: size.width * 0.03,
                     ),
                     Container(
-                      color: Colors.amber[700],
                       child: Row(
                         children: [
                           isDrawerOpen
