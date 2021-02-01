@@ -5,11 +5,41 @@ class HistorialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+        backgroundColor: Colors.white,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.white),
+        leading: Row(
+          children: [
+            SizedBox(
+              width: size.width * 0.03,
+            ),
+            GestureDetector(
+              child: Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 0.5,
+                        blurRadius: 3,
+                        offset: Offset(0, 5),
+                      )
+                    ]),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: Container(
         alignment: Alignment.center,
@@ -68,9 +98,16 @@ class HistorialPage extends StatelessWidget {
   _view(int index, Size size) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(0, 5),
+            )
+          ]),
       width: size.width * .9,
       height: size.height * .15,
       child: Row(
@@ -85,8 +122,8 @@ class HistorialPage extends StatelessWidget {
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [
-                      Colors.amber[600],
-                      Color.fromRGBO(245, 182, 79, 1.0)
+                      Colors.amber[900],
+                      Colors.amber[700],
                     ]),
                 borderRadius: BorderRadius.circular(100)),
             child: Image(

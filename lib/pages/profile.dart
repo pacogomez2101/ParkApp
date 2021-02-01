@@ -4,19 +4,50 @@ import 'package:flutter/material.dart';
 class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+        backgroundColor: Colors.white,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.white),
+        leading: Row(
+          children: [
+            SizedBox(
+              width: size.width * 0.03,
+            ),
+            GestureDetector(
+              child: Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 0.5,
+                        blurRadius: 3,
+                        offset: Offset(0, 5),
+                      )
+                    ]),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
-      backgroundColor: Color.fromRGBO(26, 34, 52, 1),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
             height: MediaQuery.of(context).size.height * 0.3,
             width: double.infinity,
-            color: Color.fromRGBO(26, 34, 52, 1),
+            color: Colors.white,
             child: Column(
               children: [
                 SizedBox(
@@ -39,7 +70,7 @@ class Profile extends StatelessWidget {
                 Text(
                   'Francisco Gómez',
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.grey[600],
                       fontSize: MediaQuery.of(context).size.width * 0.05),
                 ),
                 SizedBox(
@@ -78,11 +109,11 @@ class Profile extends StatelessWidget {
         ListTile(
           title: Text(
             data,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.grey[600]),
           ),
           subtitle: Text(
             title,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.grey[600]),
           ),
         ),
         Divider()
@@ -101,7 +132,10 @@ class Profile extends StatelessWidget {
             gradient: LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
-                colors: [Colors.amber[600], Color.fromRGBO(245, 182, 79, 1.0)]),
+                colors: [
+                  Colors.amber[900],
+                  Colors.amber[700],
+                ]),
             borderRadius: BorderRadius.circular(50)),
         height: size.width * 0.1,
         width: size.width * .6,
