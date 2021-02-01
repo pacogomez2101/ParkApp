@@ -11,7 +11,37 @@ class CreditCardPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.grey[500]),
+        leading: Row(
+          children: [
+            SizedBox(
+              width: size.width * 0.03,
+            ),
+            GestureDetector(
+              child: Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(50.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        spreadRadius: 0.5,
+                        blurRadius: 3,
+                        offset: Offset(0, 5),
+                      )
+                    ]),
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.grey,
+                ),
+              ),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [

@@ -12,14 +12,23 @@ class DrawerPage extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-            Colors.amber[900],
             Colors.amber[700],
+            Colors.amber[900],
           ])),
       child: Column(
         children: [
           SizedBox(
-            height: size.width * 0.6,
+            height: size.width * 0.3,
           ),
+          Container(
+            margin: EdgeInsets.only(right: size.width * 0.4),
+            width: double.infinity,
+            child: Image.asset(
+              'assets/ParkApp-White.png',
+              height: size.width * 0.3,
+            ),
+          ),
+          SizedBox(height: size.width * 0.1),
           listTile(
             context,
             'profile',

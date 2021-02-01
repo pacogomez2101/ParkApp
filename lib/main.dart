@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       color: Colors.black,
       debugShowCheckedModeBanner: false,
       title: 'ParkApp',
-      initialRoute: 'stackHome',
+      initialRoute: '/',
       routes: getRoutes(),
       theme: ThemeData(
         primaryIconTheme: IconThemeData(color: Colors.amber),

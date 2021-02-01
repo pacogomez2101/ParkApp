@@ -1,4 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,14 +10,93 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const duration = Duration(seconds: 1);
   double xOffset = 0;
   double yOffset = 0;
   double scaleFactor = 1;
   bool isDrawerOpen = false;
   double borderRadius = 0;
 
+  String _scanBarcode;
+
+  bool data = false;
+  int scanNegativeResult = -1;
+
+  int secondsPassed = 0;
+  bool isActive = false;
+  Timer timer;
+
+  DateTime date = DateTime.now().toLocal();
+
+  void handleTick() {
+    if (isActive) {
+      setState(() {
+        secondsPassed = secondsPassed + 1;
+      });
+    }
+  }
+
+  Future<void> scanQr() async {
+    String barCodeScanRes;
+    try {
+      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#FF5300', 'CANCEL', true, ScanMode.QR);
+      if (barCodeScanRes == scanNegativeResult.toString()) {
+        data = false;
+        isActive = isActive;
+      } else {
+        data = true;
+        isActive = !isActive;
+      }
+      print(barCodeScanRes);
+    } on PlatformException {
+      barCodeScanRes = 'Failed to get platform version';
+    }
+
+    setState(() {
+      _scanBarcode = barCodeScanRes;
+    });
+  }
+
+  Future<void> scanBar() async {
+    String barCodeScanRes;
+    try {
+      barCodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#FF5300', 'CANCEL', true, ScanMode.BARCODE);
+      if (barCodeScanRes == scanNegativeResult.toString()) {
+        data = false;
+        isActive = isActive;
+      } else {
+        data = true;
+        isActive = !isActive;
+      }
+      print(barCodeScanRes);
+    } on PlatformException {
+      barCodeScanRes = 'Failed to get platform version';
+    }
+
+    setState(() {
+      _scanBarcode = barCodeScanRes;
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (timer == null) {
+      timer = Timer.periodic(duration, (Timer t) {
+        handleTick();
+      });
+    }
+    int seconds = secondsPassed % 60;
+    int minutes = secondsPassed ~/ 60;
+    int hours = secondsPassed ~/ (60 * 60);
+
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
@@ -34,49 +117,378 @@ class _HomePageState extends State<HomePage> {
         transform: Matrix4.translationValues(xOffset, yOffset, 0)
           ..scale(scaleFactor),
         child: SafeArea(
+          child: data == false
+              ? Column(
+                  children: [
+                    SizedBox(
+                      height: size.width * 0.03,
+                    ),
+                    Container(
+                        child: Row(
+                      children: [
+                        isDrawerOpen
+                            ? Row(
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.05,
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              spreadRadius: 0.5,
+                                              blurRadius: 3,
+                                              offset: Offset(0, 5),
+                                            )
+                                          ]),
+                                      child: Icon(
+                                        Icons.arrow_back,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        xOffset = 0;
+                                        yOffset = 0;
+                                        scaleFactor = 1;
+                                        borderRadius = 0;
+                                        isDrawerOpen = false;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.3,
+                                  ),
+                                  Container(
+                                    width: size.width * 0.1,
+                                    height: size.width * 0.1,
+                                    child: Image.asset('assets/parkGrey.png'),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.05,
+                                  ),
+                                  GestureDetector(
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(50.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.3),
+                                              spreadRadius: 0.5,
+                                              blurRadius: 3,
+                                              offset: Offset(0, 5),
+                                            )
+                                          ]),
+                                      child: Icon(
+                                        Icons.menu,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      setState(() {
+                                        xOffset = 230;
+                                        yOffset = 150;
+                                        scaleFactor = 0.6;
+                                        borderRadius = 20;
+                                        isDrawerOpen = true;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.3,
+                                  ),
+                                  Container(
+                                    width: size.width * 0.1,
+                                    height: size.width * 0.1,
+                                    child: Image.asset('assets/parkGrey.png'),
+                                  ),
+                                ],
+                              ),
+                      ],
+                    )),
+                    SizedBox(
+                      height: size.width * 0.2,
+                    ),
+                    Container(
+                      child: _data(size),
+                    ),
+                    SizedBox(
+                      height: size.width * 0.2,
+                    ),
+                    title(size),
+                    Spacer(),
+                    button(size, 'Escanea QR', () {
+                      scanQr();
+                      setState(() {});
+                    }),
+                    SizedBox(
+                      height: size.width * 0.05,
+                    ),
+                    button(size, 'Escanea Código de Barras', () {
+                      scanBar();
+                      setState(() {});
+                    }),
+                    SizedBox(
+                      height: size.width * 0.05,
+                    ),
+                    adds(size),
+                  ],
+                )
+              : Column(
+                  children: [
+                    SizedBox(
+                      height: size.width * 0.03,
+                    ),
+                    Container(
+                      color: Colors.amber[700],
+                      child: Row(
+                        children: [
+                          isDrawerOpen
+                              ? Row(
+                                  children: [
+                                    SizedBox(
+                                      width: size.width * 0.05,
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.3),
+                                                spreadRadius: 0.5,
+                                                blurRadius: 3,
+                                                offset: Offset(0, 5),
+                                              )
+                                            ]),
+                                        child: Icon(
+                                          Icons.arrow_back,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          xOffset = 0;
+                                          yOffset = 0;
+                                          scaleFactor = 1;
+                                          borderRadius = 0;
+                                          isDrawerOpen = false;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: size.width * 0.3,
+                                    ),
+                                    Container(
+                                      width: size.width * 0.1,
+                                      height: size.width * 0.1,
+                                      child: Image.asset('assets/parkGrey.png'),
+                                    ),
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    SizedBox(
+                                      width: size.width * 0.05,
+                                    ),
+                                    GestureDetector(
+                                      child: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(50.0),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey
+                                                    .withOpacity(0.3),
+                                                spreadRadius: 0.5,
+                                                blurRadius: 3,
+                                                offset: Offset(0, 5),
+                                              )
+                                            ]),
+                                        child: Icon(
+                                          Icons.menu,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        setState(() {
+                                          xOffset = 230;
+                                          yOffset = 150;
+                                          scaleFactor = 0.6;
+                                          borderRadius = 20;
+                                          isDrawerOpen = true;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: size.width * 0.3,
+                                    ),
+                                    Container(
+                                      width: size.width * 0.1,
+                                      height: size.width * 0.1,
+                                      child: Image.asset('assets/parkGrey.png'),
+                                    ),
+                                  ],
+                                ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.width * 0.08,
+                    ),
+                    title2(size),
+                    SizedBox(
+                      height: size.width * 0.2,
+                    ),
+                    ticketUi(size, hours, minutes, seconds),
+                    SizedBox(
+                      height: size.width * 0.2,
+                    ),
+                    button(size, 'Pagar Boleto', () {
+                      showBottom(size);
+                    })
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+
+  adds(Size size) {
+    return Container(
+      width: double.infinity,
+      height: size.width * 0.2,
+      child: Image.asset(
+        'assets/chilis.jpg',
+        fit: BoxFit.scaleDown,
+      ),
+    );
+  }
+
+  showBottom(Size size) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Stack(children: [
+          Container(
+            width: double.infinity,
+            height: size.width * 0.3,
+            decoration: BoxDecoration(
+                borderRadius:
+                    BorderRadius.only(bottomLeft: Radius.circular(100.0)),
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.amber[900],
+                      Colors.amber[700],
+                    ])),
+          ),
+          Container(
+            height: size.width * 0.4,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: size.width * 0.05,
+                ),
+                chooseCard(size),
+              ],
+            ),
+          ),
+        ]);
+      },
+    );
+  }
+
+  chooseCard(Size size) {
+    return Padding(
+      padding: EdgeInsets.only(left: size.width * 0.05),
+      child: GestureDetector(
+        onTap: () {
+          print('Responsivo');
+        },
+        child: Container(
+          height: size.width * 0.2,
+          width: size.width * 0.9,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 0.5,
+                  blurRadius: 3,
+                  offset: Offset(0, 5),
+                ),
+              ]),
           child: Column(
             children: [
-              Container(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              SizedBox(
+                height: size.width * 0.03,
+              ),
+              Row(
                 children: [
-                  isDrawerOpen
-                      ? IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.amber[900],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 0;
-                              yOffset = 0;
-                              scaleFactor = 1;
-                              borderRadius = 0;
-                              isDrawerOpen = false;
-                            });
-                          },
-                        )
-                      : IconButton(
-                          icon: Icon(
-                            Icons.menu,
-                            color: Colors.amber[900],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              xOffset = 230;
-                              yOffset = 150;
-                              scaleFactor = 0.6;
-                              borderRadius = 20;
-                              isDrawerOpen = true;
-                            });
-                          },
-                        ),
-                  _appBar(size)
+                  SizedBox(
+                    width: size.width * 0.03,
+                  ),
+                  Image.asset(
+                    'assets/master1.png',
+                    height: size.width * 0.05,
+                  ),
                 ],
-              )),
-              Container(
-                child: _data(size),
-              )
+              ),
+              SizedBox(
+                height: size.width * 0.01,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.05,
+                  ),
+                  Text(
+                    'Tarjeta',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: size.width * 0.05,
+                    ),
+                  ),
+                  SizedBox(
+                    width: size.width * 0.15,
+                  ),
+                  Text(
+                    '**** **** **** 4234',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: size.width * 0.05,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -84,360 +496,251 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _appBar(Size size) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, 'User');
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 15),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              "Francisco",
-              style: TextStyle(color: Colors.amber[900]),
-            ),
-            SizedBox(width: size.width * .02),
-            CircleAvatar(
-              maxRadius: 15,
-              backgroundColor: Color.fromRGBO(245, 182, 79, 1.0),
-              child: Container(
-                  alignment: Alignment.center,
-                  child: Text('Fr',
-                      style: TextStyle(color: Colors.white, fontSize: 10))),
-            ),
-          ],
+  ticketUi(Size size, int hours, int minutes, int seconds) {
+    return Column(
+      children: [
+        Container(
+          height: size.width * 0.85,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/time.png',
+                    height: size.width * 0.3,
+                  ),
+                  Text(
+                    'Alejandro Roa',
+                    style: TextStyle(
+                      fontSize: size.width * 0.05,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Tiempo transcurrido:',
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: size.width * 0.04,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: size.width * 0.05),
+              Row(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.05,
+                  ),
+                  Text('Tiempo'),
+                  SizedBox(width: size.width * 0.02),
+                  Text(hours.toString().padLeft(2, '0')),
+                  SizedBox(width: size.width * 0.01),
+                  Text('-'),
+                  SizedBox(width: size.width * 0.01),
+                  Text(minutes.toString().padLeft(2, '0')),
+                  SizedBox(width: size.width * 0.01),
+                  Text('-'),
+                  SizedBox(width: size.width * 0.01),
+                  Text(seconds.toString().padLeft(2, '0')),
+                ],
+              ),
+              SizedBox(
+                height: size.width * 0.02,
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.05,
+                  ),
+                  Text('Fecha ${date.day} - ${date.month} - ${date.year}')
+                ],
+              ),
+              SizedBox(
+                height: size.width * 0.05,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Container(
+                        child: Image.asset(
+                          'assets/barcode2.png',
+                          height: size.width * 0.2,
+                        ),
+                      ),
+                      Text(_scanBarcode),
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
+          width: size.width * .9,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  spreadRadius: 1,
+                  blurRadius: 3,
+                  offset: Offset(3, 8),
+                )
+              ]),
+        )
+      ],
+    );
+  }
+
+  Row title(Size size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Escanea el código QR o código de \n           barras de tu boleto',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: size.width * 0.045,
+          ),
         ),
-      ),
+      ],
+    );
+  }
+
+  Row title2(Size size) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Ticket Activo',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: size.width * 0.06,
+          ),
+        ),
+      ],
     );
   }
 
   _data(Size size) {
-    return Center(
+    return Container(
+      child: Column(
+        children: [
+          scan(size),
+        ],
+      ),
+    );
+  }
+
+  scan(Size size) {
+    return Container(
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(color: Colors.grey, width: 2),
+                    top: BorderSide(color: Colors.grey, width: 2),
+                  ),
+                ),
+              ),
+              SizedBox(),
+              Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(color: Colors.grey, width: 2),
+                    top: BorderSide(color: Colors.grey, width: 2),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.asset(
+                  'assets/qr3.png',
+                  height: size.width * .5,
+                  width: size.width * .5,
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(color: Colors.grey, width: 2),
+                    bottom: BorderSide(color: Colors.grey, width: 2),
+                  ),
+                ),
+              ),
+              SizedBox(),
+              Container(
+                height: size.width * 0.1,
+                width: size.width * 0.1,
+                decoration: BoxDecoration(
+                  border: Border(
+                    right: BorderSide(color: Colors.grey, width: 2),
+                    bottom: BorderSide(color: Colors.grey, width: 2),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  button(Size size, String title, Function function) {
+    return GestureDetector(
+      onTap: function,
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: EdgeInsets.only(left: size.width * 0.05),
-            child: Text(
-              "Tickets activos",
-              style: TextStyle(
-                color: Colors.amber[900],
-                fontSize: size.width * 0.06,
-              ),
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.05,
-          ),
-          RaisedButton(
-            onPressed: () {
-              setState(() {
-                xOffset = 0;
-                yOffset = 0;
-                scaleFactor = 1;
-                borderRadius = 0;
-                isDrawerOpen = false;
-              });
-            },
-            padding: EdgeInsets.all(0.0),
-            color: Colors.transparent,
-            elevation: 450.0,
-            child: Container(
-              child: Column(
-                children: [
-                  mitadticketMamalon(),
-                  mitadticketMamalon2(),
-                ],
-              ),
-            ),
-          )
-        ]),
-      ),
-    );
-  }
-
-  // ignore: unused_element
-  _ticket(Size size) {
-    return Container(
-      margin: EdgeInsets.all(20),
-      child: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.only(left: 20),
-              alignment: Alignment.centerLeft,
-              decoration: BoxDecoration(
-                  color: Colors.amber,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )),
-              height: size.width * .17,
-              width: size.width * .85,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Francisco Gómez",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                      textAlign: TextAlign.left,
-                    ),
-                    Text(
-                      "Centro Comercial Altaria",
-                      style: TextStyle(color: Colors.white, fontSize: 12),
-                      textAlign: TextAlign.left,
-                    )
-                  ])),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                )),
-            height: size.width * .40,
-            width: size.width * .85,
-            child: Column(children: [
-              SizedBox(height: 15),
-              Text(
-                "Tiempo transcurrido:",
-                style: TextStyle(fontSize: 20),
-              ),
-              Text("1:16:35", style: TextStyle(fontSize: 18)),
-              SizedBox(height: 20),
-              Text("Total a pagar:", style: TextStyle(fontSize: 20)),
-              Text("12.00", style: TextStyle(fontSize: 18)),
-            ]),
-          ),
-          SizedBox(height: 170),
-          _boton('PAGAR BOLETO', Colors.amber, Colors.white, size, context),
-        ],
-      ),
-    );
-  }
-
-  _boton(String mensaje, Color color, Color colorTexto, Size size,
-      BuildContext context) {
-    return Container(
-      width: size.width * .8,
-      height: size.width * .15,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-            Colors.amber[900],
-            Colors.amber[700],
-          ])),
-      child: Center(
+        child: Center(
           child: Text(
-        mensaje,
-        style: TextStyle(color: colorTexto),
-      )),
-    );
-  }
-
-  mitadticketMamalon() {
-    return Container(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          CustomPaint(
-            size: Size(350,
-                200), //You can Replace this with your desired WIDTH and HEIGHT
-            painter: RPSCustomPainter1(),
+            title,
+            style: TextStyle(color: Colors.white),
           ),
-          infoTicket1()
-        ],
+        ),
+        height: size.width * 0.13,
+        width: size.width * .7,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(50.0),
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Colors.amber[900],
+                  Colors.amber[700],
+                ]),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 0.5,
+                blurRadius: 3,
+                offset: Offset(0, 5),
+              )
+            ]),
       ),
     );
-  }
-
-  infoTicket1() {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'Francisco Gómez',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: size.width * 0.08,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.02,
-          ),
-          Text(
-            'Centro Comercial Altaria',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: size.width * 0.045,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  infoTicket2() {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      child: Column(
-        children: [
-          SizedBox(
-            height: size.width * 0.05,
-          ),
-          Text(
-            'Tiempo transcurrido:',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.05,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.02,
-          ),
-          Text(
-            '1:16:35',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.045,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.02,
-          ),
-          Divider(
-            endIndent: 50,
-            indent: 50,
-            color: Colors.grey[400],
-          ),
-          SizedBox(
-            height: size.width * 0.02,
-          ),
-          Text(
-            'Total a pagar:',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.045,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.02,
-          ),
-          Text(
-            '\$12.00',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: size.width * 0.045,
-              fontWeight: FontWeight.w300,
-            ),
-          ),
-          SizedBox(
-            height: size.width * 0.1,
-          ),
-          code(),
-          SizedBox(
-            height: size.width * 0.2,
-          ),
-          _boton('PAGAR BOLETO', Color.fromRGBO(245, 182, 79, 1.0),
-              Colors.white, size, context),
-        ],
-      ),
-    );
-  }
-
-  mitadticketMamalon2() {
-    return Container(
-      child: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          CustomPaint(
-            size: Size(350,
-                450), //You can Replace this with your desired WIDTH and HEIGHT
-            painter: RPSCustomPainter2(),
-          ),
-          infoTicket2(),
-        ],
-      ),
-    );
-  }
-
-  code() {
-    return Container(
-      child: Image(
-        height: 100,
-        width: 300,
-        image: AssetImage('assets/code.png'),
-      ),
-    );
-  }
-}
-
-class RPSCustomPainter1 extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint_0 = new Paint()
-      ..color = Colors.amber[900]
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 1;
-
-    Path path_0 = Path();
-    path_0.moveTo(0, 0);
-    path_0.lineTo(size.width, 0);
-    path_0.lineTo(size.width, size.height * 0.90);
-    path_0.quadraticBezierTo(
-        size.width * 0.94, size.height * 0.90, size.width * 0.94, size.height);
-    path_0.cubicTo(size.width * 0.72, size.height, size.width * 0.28,
-        size.height, size.width * 0.06, size.height);
-    path_0.quadraticBezierTo(
-        size.width * 0.06, size.height * 0.90, 0, size.height * 0.90);
-    path_0.lineTo(0, 0);
-    path_0.close();
-
-    canvas.drawPath(path_0, paint_0);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
-
-class RPSCustomPainter2 extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint_0 = new Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.fill
-      ..strokeWidth = 1;
-
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 0.06, 0);
-    path_0.lineTo(size.width * 0.94, 0);
-    path_0.quadraticBezierTo(
-        size.width * 0.94, size.height * 0.05, size.width, size.height * 0.05);
-    path_0.quadraticBezierTo(
-        size.width, size.height * 0.29, size.width, size.height);
-    path_0.lineTo(0, size.height);
-    path_0.quadraticBezierTo(0, size.height * 0.29, 0, size.height * 0.05);
-    path_0.quadraticBezierTo(
-        size.width * 0.06, size.height * 0.05, size.width * 0.06, 0);
-    path_0.close();
-
-    canvas.drawPath(path_0, paint_0);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }
